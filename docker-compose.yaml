@@ -1,0 +1,58 @@
+version: '3.8'
+services:
+  api:
+    container_name: server
+    build:
+      context: .
+      dockerfile:  Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./.env
+    depends_on:
+      - postgresql
+      - mongodb
+    restart: always
+    networks:
+      - server
+
+  postgresql:
+    image: postgres:13-bullseye
+    container_name: postgre
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./_data:/var/lib/postgresql/data
+    networks:
+      - server
+
+  mongodb:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_NAME}
+    volumes:
+      # seeding scripts
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      # named volumes
+      - mongodb:/data/db
+      - mongoconfig:/data/configdb
+    networks:
+      - server
+
+volumes:
+  # default dir on Ubuntu: /var/lib/docker/volumes
+  mongodb:
+  mongoconfig:
+
+networks:
+  server:
+    driver: bridge
