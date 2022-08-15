@@ -3,7 +3,6 @@ FROM node:16.14.2
 EXPOSE 8080
 WORKDIR /app
 
-
 RUN apt-get -y update
 RUN apt-get install -y apt-transport-https build-essential libgconf-2-4 python git libglib2.0-dev
 
@@ -16,7 +15,10 @@ COPY ./package.json ./package.json
 COPY ./nest-cli.json ./nest-cli.json
 COPY ./src ./src
 COPY ./.env ./.env
+COPY ./typeorm.config.ts ./typeorm.config.ts
 
 RUN yarn
 RUN yarn build
+RUN yarn migrate:run
+
 CMD ["bash", "/app/scripts/start.sh"]
