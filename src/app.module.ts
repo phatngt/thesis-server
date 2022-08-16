@@ -22,7 +22,7 @@ import { UserModule } from './user/user.module';
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
-        entities: ["src/*.entity.ts"],
+        entities: ["dist/**/*.entity{.ts,.js}"],
 
       })
     }),

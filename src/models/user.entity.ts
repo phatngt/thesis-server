@@ -5,7 +5,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Audit } from './audit';
+import { Audit } from './audit.entity';
 import { Roles } from './roles.entity';
 import { UserType } from './user-types.entity';
 
@@ -24,7 +24,7 @@ export class User extends Audit {
   email: string;
 
   @Column()
-  pwd: string;
+  password: string;
 
   @Column()
   phone: string;
@@ -45,10 +45,11 @@ export class User extends Audit {
   is_premium: boolean;
 
   @OneToOne(type => Roles, (role) => role.name)
-  @JoinColumn({ name: 'role_id' })
-  role_id: Roles
+  @JoinColumn({ name: 'role' })
+  role: Roles
 
   @OneToOne(type => UserType, (usertype) => usertype.id)
-  user_type: number;
+  @JoinColumn({ name: 'user_type' })
+  user_type: UserType;
 
 }

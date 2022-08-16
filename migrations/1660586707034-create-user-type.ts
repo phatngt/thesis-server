@@ -17,7 +17,7 @@ export class createUserType1660586707034 implements MigrationInterface {
 
                     },
                     {
-                        name: "type",
+                        name: "name",
                         type: "varchar"
                     },
                     {
@@ -31,7 +31,7 @@ export class createUserType1660586707034 implements MigrationInterface {
         //Add user_type column to user table
         await queryRunner.addColumn("user",
             new TableColumn({
-                name: "user_type_id",
+                name: "user_type",
                 type: "int"
             })
         );
@@ -40,12 +40,13 @@ export class createUserType1660586707034 implements MigrationInterface {
         await queryRunner.createForeignKey(
             "user",
             new TableForeignKey({
-                columnNames: ["user_type_id"],
+                columnNames: ["user_type"],
                 referencedColumnNames: ["id"],
                 referencedTableName: "user_type",
                 onDelete: "CASCADE"
             })
         )
+
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

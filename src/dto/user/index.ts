@@ -32,7 +32,7 @@ export class UserCreateDTO {
   })
   @MinLength(6)
   @MaxLength(60)
-  pwd: string;
+  password: string;
 
   @ApiProperty({
     description: 'User phone',

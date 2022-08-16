@@ -54,7 +54,33 @@ export class createRoleTable1660501295721 implements MigrationInterface {
                         default: false
                     },
                     {
-                        name: "role_id",
+                        name: "is_deleted",
+                        type: "boolean",
+                        default: false
+                    },
+                    {
+                        name: "add_by",
+                        type: "int",
+                        isNullable: true
+
+                    },
+                    {
+                        name: "add_on",
+                        type: "timestamp",
+                        isNullable: true
+                    },
+                    {
+                        name: "upd_by",
+                        type: "int",
+                        isNullable: true
+                    },
+                    {
+                        name: "upd_on",
+                        type: "timestamp",
+                        isNullable: true
+                    },
+                    {
+                        name: "role",
                         type: "int",
                     }
                 ]
@@ -73,7 +99,7 @@ export class createRoleTable1660501295721 implements MigrationInterface {
         await queryRunner.createForeignKey(
             "user",
             new TableForeignKey({
-                columnNames: ["role_id"],
+                columnNames: ["role"],
                 referencedColumnNames: ["id"],
                 referencedTableName: "role",
                 onDelete: "CASCADE"

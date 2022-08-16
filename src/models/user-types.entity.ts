@@ -1,13 +1,12 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Audit } from './audit';
 
-@Entity({ name: 'user_types' })
-export class UserType extends Audit {
+@Entity({ name: 'user_type' })
+export class UserType {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column()
-  type: string;
+  name: string;
 
   @Column({
     nullable: true
