@@ -18,13 +18,14 @@ export class UserService {
 
   async findByEmail(email: string) {
     try {
-      const user = await this.userRepository.findOneBy({ email: email });
+      const user = await this.userRepository.findOne({ where: { email: email }, relations: ['role', 'user_type'] });
       if (!user) {
         return null;
       }
       return user;
+
     } catch (error) {
-      console.log("error: ", error);
+      console.log("ERROR: ", error);
       throw new HttpException(error, 500);
     }
 
@@ -38,9 +39,12 @@ export class UserService {
 
       const type = await this.userTypeRepository.findOneBy({ name: UserTypes.CLIENT })
       if (!type) throw new HttpException("Type user not existed", 500);
-      const user = await this.userRepository.save({ ...dataWithAudit, role: role, user_type: type });
+
+      const { password, ...user } = await this.userRepository.save({ ...dataWithAudit, role: role, user_type: type });
       return user;
+
     } catch (error) {
+      console.log("ERROR: ", error);
       throw new HttpException(error, 500);
     }
 

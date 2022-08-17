@@ -50,6 +50,12 @@ export class createUserType1660586707034 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        const table = await queryRunner.getTable('user');
+        const foreignKey = table.foreignKeys.find(
+            (fk) => fk.columnNames.indexOf('user_type') !== -1
+        )
+        await queryRunner.dropForeignKey('user', foreignKey)
+        await queryRunner.dropColumns('user', ["user_type"]);
         await queryRunner.dropTable("user_type", true);
     }
 

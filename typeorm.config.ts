@@ -16,5 +16,6 @@ export default new DataSource({
   entities: ["dist/**/*.entity{.ts,.js}"],
   migrations: [
     "dist/migrations/*{.ts,.js}",
+    "dist/seeds/*{.ts,.js}",
   ],
 });
