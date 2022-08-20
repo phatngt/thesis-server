@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn
 import { Audit } from "./audit.entity";
 import { User } from "./user.entity";
 
-@Entity('garden_room')
+@Entity({ name: 'garden_room' })
 export class GardenRoom extends Audit {
   @PrimaryGeneratedColumn('increment')
   id: number
@@ -24,6 +24,6 @@ export class GardenRoom extends Audit {
   parent_room_id: number
 
   @OneToOne(type => User, (user) => user.id)
-  @JoinColumn({ name: "owner" })
+  @JoinColumn({ name: "owner", })
   owner: number
 }

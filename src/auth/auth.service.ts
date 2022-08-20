@@ -2,6 +2,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterDTO } from 'src/dto/auth';
 import { sha512 } from 'src/helpers';
+import { User } from 'src/models';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
@@ -14,7 +15,7 @@ export class AuthService {
   }
 
   async validateUser(email: string, pwd: string): Promise<any> {
-    const user = await this.userService.findByEmail(email); //need to index emai;
+    const user = await this.userService.findByEmail(email) as User; //need to index emai;
     if (user && user.password == sha512(pwd)) {
 
       const { password, ...result } = user;

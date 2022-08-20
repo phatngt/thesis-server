@@ -26,7 +26,7 @@ export class UserService {
 
     } catch (error) {
       console.log("ERROR: ", error);
-      throw new HttpException(error, 500);
+      return new HttpException(error, 500);
     }
 
   }
@@ -37,15 +37,16 @@ export class UserService {
       const role = await this.roleUserRepository.findOneBy({ name: UserPermision.USER });
       if (!role) throw new HttpException("Role user not existed", 500);
 
-      const type = await this.userTypeRepository.findOne({ where: { name: "admin" } });
+      const type = await this.userTypeRepository.findOne({ where: { name: UserTypes.CLIENT } });
       if (!type) throw new HttpException("Type user not existed", 500);
+      console.log("data: ", dataWithAudit);
 
       const { password, ...user } = await this.userRepository.save({ ...dataWithAudit, role: role, user_type: type });
       return user;
 
     } catch (error) {
       console.log("ERROR: ", error);
-      throw new HttpException(error, 500);
+      return new HttpException(error, 500);
     }
 
   }

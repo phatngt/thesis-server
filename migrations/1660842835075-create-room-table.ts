@@ -34,6 +34,11 @@ export class createRoomTable1660842835075 implements MigrationInterface {
                         type: "text"
                     },
                     {
+                        name: "is_deleted",
+                        type: "boolean",
+                        default: false
+                    },
+                    {
                         name: "add_by",
                         type: "int",
                         isNullable: true
@@ -56,7 +61,9 @@ export class createRoomTable1660842835075 implements MigrationInterface {
                     },
                     {
                         name: "parent_room_id",
-                        type: "int"
+                        type: "int",
+                        isNullable: true
+
                     },
                     {
                         name: "owner",

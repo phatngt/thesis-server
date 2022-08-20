@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -44,11 +45,11 @@ export class User extends Audit {
   })
   is_premium: boolean;
 
-  @OneToOne(type => Roles, (role) => role.name)
+  @ManyToOne(type => Roles, (role) => role.name)
   @JoinColumn({ name: 'role' })
   role: Roles
 
-  @OneToOne(type => UserType, (usertype) => usertype.id)
+  @ManyToOne(type => UserType, (usertype) => usertype.id)
   @JoinColumn({ name: 'user_type' })
   user_type: UserType;
 
