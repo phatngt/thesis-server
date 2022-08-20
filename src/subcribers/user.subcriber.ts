@@ -1,11 +1,13 @@
 import { User } from "src/models";
 import { sha512 } from "src/helpers";
-import { Connection, EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent } from "typeorm";
+import { DataSource, EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent } from "typeorm";
+import { Injectable, Optional } from "@nestjs/common";
 
 @EventSubscriber()
+@Injectable()
 export class UserSubcriber implements EntitySubscriberInterface<User>{
-  constructor(connection: Connection) {
-    connection.subscribers.push(this);
+  constructor(dataSource: DataSource) {
+    dataSource.subscribers.push(this);
   }
 
   listenTo(): any {

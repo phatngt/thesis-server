@@ -18,4 +18,9 @@ export default new DataSource({
     "dist/migrations/*{.ts,.js}",
     "dist/seeds/*{.ts,.js}",
   ],
+  extra: configService.get<string>('NODE_ENV') == "production" ? {
+    "ssl": {
+      "rejectUnauthorized": false
+    }
+  } : {}
 });

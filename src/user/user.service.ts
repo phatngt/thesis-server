@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserCreateDTO } from 'src/dto/user';
-import { Roles, User, UserType } from 'src/models';
+import { Roles, User, UserType } from 'src/models/index';
 import { Repository } from 'typeorm';
 import { auditAdd } from "src/helpers/index";
 import { UserPermision, UserTypes } from 'src/constants/user';
@@ -37,7 +37,7 @@ export class UserService {
       const role = await this.roleUserRepository.findOneBy({ name: UserPermision.USER });
       if (!role) throw new HttpException("Role user not existed", 500);
 
-      const type = await this.userTypeRepository.findOneBy({ name: UserTypes.CLIENT })
+      const type = await this.userTypeRepository.findOne({ where: { name: "admin" } });
       if (!type) throw new HttpException("Type user not existed", 500);
 
       const { password, ...user } = await this.userRepository.save({ ...dataWithAudit, role: role, user_type: type });

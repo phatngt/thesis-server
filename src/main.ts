@@ -17,11 +17,10 @@ async function bootstrap() {
     "optionsSuccessStatus": 204
   });
   app.useGlobalInterceptors(new HttpResponseInterceptor());
-  app.setGlobalPrefix('v1/api');
   app.useGlobalPipes(new ValidationPipe());
 
   // swagger for not prod
-  if (!isProduction) {
+  if (!isProduction || 1) {
     const config = new DocumentBuilder()
       .setTitle('The Garden API')
       .setDescription('This a the project document')
@@ -35,8 +34,8 @@ async function bootstrap() {
     SwaggerModule.setup('/docs', app, document, customOptions);
   }
 
-  await app.listen(process.env.API_LOCAL_PORT || 8080);
+  await app.listen(process.env.PORT || 8080);
   console.log(`TheGarden swagger is running on:  ${await app.getUrl()}/docs`);
-  console.log(`Application is running on: ${await app.getUrl()}/v1/api`);
+  console.log(`Application is running on: ${await app.getUrl()}/`);
 }
 bootstrap();

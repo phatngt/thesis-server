@@ -14,11 +14,11 @@ COPY ./tsconfig.build.json ./tsconfig.build.json
 COPY ./package.json ./package.json
 COPY ./nest-cli.json ./nest-cli.json
 COPY ./src ./src
-COPY ./.env ./.env
+COPY ./migrations ./migrations
+COPY ./seeds ./seeds
 COPY ./typeorm.config.ts ./typeorm.config.ts
 
 RUN yarn
 RUN yarn build
-RUN yarn migrate:run
 
 CMD ["bash", "/app/scripts/start.sh"]

@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
+import { GardenRoomModule } from './garden-room/garden-room.module';
 
 @Module({
   imports: [
@@ -26,12 +27,25 @@ import { UserModule } from './user/user.module';
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
         entities: ["dist/**/*.entity{.ts,.js}"],
-
+        extra: configService.get<string>('NODE_ENV') == "production" ? {
+          "ssl": {
+            "rejectUnauthorized": false
+          }
+        } : {}
       })
     }),
-    MongooseModule.forRoot(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:27017/${process.env.MONGO_NAME || 'admin'}?authSource=${process.env.MONGO_AUTHDB || 'admin'}`),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('NODE_ENV') == "production" ?
+          `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}/${process.env.MONGO_NAME || 'admin'}?retryWrites=true&w=majority` :
+          `mongodb://${configService.get<string>('MONGO_USER')}:${configService.get<string>('MONGO_PASSWORD')}@${configService.get<string>('MONGO_HOST')}:27017/${configService.get<string>('MONGO_NAME') || 'admin'}?authSource=${configService.get<string>('MONGO_AUTHDB') || 'admin'}`
+      })
+    }),
     SharedModule,
-    UserModule
+    UserModule,
+    GardenRoomModule
   ],
   controllers: [AppController],
   providers: [AppService],
