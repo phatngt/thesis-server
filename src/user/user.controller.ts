@@ -1,0 +1,31 @@
+import { Body, Controller, Delete, Param, Patch, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Role } from 'src/auth/client-roles.decorator';
+import { RolesGuard } from 'src/auth/client-roles.guard';
+import { Roles } from 'src/constants/decorator';
+import { UserUpdateDTO } from 'src/dto/user';
+import { UserService } from './user.service';
+
+@ApiTags('User')
+@Controller('user')
+export class UserController {
+  constructor(
+    private userService: UserService
+  ) { }
+
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard)
+  @Role(Roles.USER)
+  @Patch('update/:id')
+  async update(@Param('id') id: string, @Body() data: UserUpdateDTO) {
+    return this.userService.update(Number(id), data);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard)
+  @Role(Roles.ADMIN)
+  @Delete('/delete/:id')
+  async delete(@Param('id') id: string) {
+
+  }
+}
