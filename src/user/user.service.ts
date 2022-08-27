@@ -37,10 +37,12 @@ export class UserService extends BaseCRUD {
   async createUser(data: UserCreateDTO) {
     const dataWithAudit = { ...data, ...auditAdd() }
     try {
-      const role = await this.getOne({ name: UserPermision.USER });
+      const role = await this.roleUserRepository.findOneBy({ name: UserPermision.USER });
+
       if (!role) throw new HttpException("Role user not existed", 500);
 
-      const type = await this.getOne({ name: UserTypes.CLIENT });
+
+      const type = await this.userTypeRepository.findOneBy({ name: UserTypes.CLIENT });
       if (!type) throw new HttpException("Type user not existed", 500);
 
       const { password, ...user } = await this.create({ ...dataWithAudit, role: role, user_type: type });

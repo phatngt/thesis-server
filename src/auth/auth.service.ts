@@ -36,7 +36,7 @@ export class AuthService {
     if (userEmail) throw new HttpException("User has existed", 409)
 
     try {
-      const user = this.userService.create(data);
+      const user = this.userService.createUser(data);
       return user;
     } catch (error) {
       throw new HttpException(error, 500)
