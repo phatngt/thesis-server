@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { auditAdd } from 'src/helpers';
 import { User } from 'src/models';
 import { GardenRoom } from 'src/models/garden-room.entity';
-import { BaseCRUD } from 'src/shared/base/crud.database';
+import { BaseCRUD } from 'src/modules/shared/base/crud.database';
 import { GardenRoomType, GardenRoomUpdate } from 'src/types/garden-room';
 import { Repository } from 'typeorm';
 

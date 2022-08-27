@@ -1,7 +1,7 @@
 import { User } from "src/models";
 import { sha512 } from "src/helpers";
 import { DataSource, EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent } from "typeorm";
-import { Injectable, Optional } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 
 @EventSubscriber()
 @Injectable()

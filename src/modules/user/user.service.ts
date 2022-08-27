@@ -5,7 +5,7 @@ import { Roles, User, UserType } from 'src/models/index';
 import { Repository } from 'typeorm';
 import { auditAdd } from "src/helpers/index";
 import { UserPermision, UserTypes } from 'src/constants/user';
-import { BaseCRUD } from 'src/shared/base/crud.database';
+import { BaseCRUD } from 'src/modules/shared/base/crud.database';
 @Injectable()
 export class UserService extends BaseCRUD {
   constructor(

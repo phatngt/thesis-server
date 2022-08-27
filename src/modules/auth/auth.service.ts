@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { RegisterDTO } from 'src/dto/auth';
 import { sha512 } from 'src/helpers';
 import { User } from 'src/models';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/modules/user/user.service';
 
 @Injectable()
 export class AuthService {

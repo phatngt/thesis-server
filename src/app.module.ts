@@ -4,10 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { SharedModule } from './shared/shared.module';
-import { UserModule } from './user/user.module';
-import { GardenRoomModule } from './garden-room/garden-room.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { SharedModule } from './modules/shared/shared.module';
+import { UserModule } from './modules/user/user.module';
+import { GardenRoomModule } from './modules/garden-room/garden-room.module';
 
 @Module({
   imports: [

@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Param, Patch, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Role } from 'src/auth/client-roles.decorator';
-import { RolesGuard } from 'src/auth/client-roles.guard';
+import { Role } from 'src/modules/auth/client-roles.decorator';
+import { RolesGuard } from 'src/modules/auth/client-roles.guard';
 import { Roles } from 'src/constants/decorator';
 import { UserUpdateDTO } from 'src/dto/user';
 import { UserService } from './user.service';

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpException, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Role } from 'src/auth/client-roles.decorator';
-import { RolesGuard } from 'src/auth/client-roles.guard';
+import { Role } from 'src/modules/auth/client-roles.decorator';
+import { RolesGuard } from 'src/modules/auth/client-roles.guard';
 import { Roles } from 'src/constants/decorator';
 import { GardenRoomDTO, GardenRoomUpdateDTO } from 'src/dto/garden-room';
 import { AppRequest } from 'src/types';
