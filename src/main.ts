@@ -1,6 +1,8 @@
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
+import { config } from 'aws-sdk';
 import { AppModule } from './app.module';
 import { HttpResponseInterceptor } from './interceptors/http-response.interceptor';
 
@@ -18,6 +20,15 @@ async function bootstrap() {
   });
   app.useGlobalInterceptors(new HttpResponseInterceptor());
   app.useGlobalPipes(new ValidationPipe());
+  const configService = app.get(ConfigService);
+  console.log("AWS_REGION: ", configService.get("AWS_REGION"))
+  config.update({
+    region: configService.get("AWS_REGION"),
+    credentials: {
+      accessKeyId: configService.get("AWS_ACCESS_KEY_ID"),
+      secretAccessKey: configService.get("AWS_SECRET_ACCESS_KEY")
+    }
+  })
 
   // swagger for not prod
   if (!isProduction || 1) {
