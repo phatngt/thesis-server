@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { UserModule } from './modules/user/user.module';
 import { GardenRoomModule } from './modules/garden-room/garden-room.module';
+import { FileModule } from './modules/file/file.module';
 
 @Module({
   imports: [
@@ -45,7 +46,8 @@ import { GardenRoomModule } from './modules/garden-room/garden-room.module';
     }),
     SharedModule,
     UserModule,
-    GardenRoomModule
+    GardenRoomModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

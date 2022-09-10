@@ -19,6 +19,20 @@ export class UserService extends BaseCRUD {
     super(userRepository);
   }
 
+  async getUserById(id: number) {
+    try {
+      if (!id) throw new HttpException("Bad request", 400);
+      const user = await this.getById(id, { relations: ["role", "user_type"] });
+      if (!user) {
+        throw new HttpException("User not existed", 409)
+      }
+      return user;
+    } catch (error) {
+      console.log("ERROR: ", error);
+      return error;
+    }
+  }
+
   async findByEmail(email: string) {
     try {
       const user = await this.getOne({ email: email }, { relations: ['role', 'user_type'] });
@@ -29,7 +43,7 @@ export class UserService extends BaseCRUD {
 
     } catch (error) {
       console.log("ERROR: ", error);
-      return new HttpException(error, 500);
+      return error;
     }
 
   }
@@ -50,7 +64,7 @@ export class UserService extends BaseCRUD {
 
     } catch (error) {
       console.log("ERROR: ", error);
-      return new HttpException(error, 500);
+      return error;
     }
   }
 
@@ -62,7 +76,8 @@ export class UserService extends BaseCRUD {
       const { password, ...result } = await this.updateById(id, data, user);
       return result;
     } catch (error) {
-
+      console.log("ERROR: ", error);
+      return error;
     }
 
   }

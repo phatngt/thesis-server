@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Param, Patch, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Role } from 'src/modules/auth/client-roles.decorator';
 import { RolesGuard } from 'src/modules/auth/client-roles.guard';
 import { Roles } from 'src/constants/decorator';
@@ -12,6 +12,14 @@ export class UserController {
   constructor(
     private userService: UserService
   ) { }
+
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard)
+  @Role(Roles.USER)
+  @Get('/:id')
+  async profile(@Param('id') id: string) {
+    return this.userService.getUserById(Number(id));
+  }
 
   @ApiBearerAuth()
   @UseGuards(RolesGuard)
