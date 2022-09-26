@@ -19,10 +19,6 @@ export class GardenRoom extends Audit {
   @Column()
   location: string
 
-  @OneToOne(type => GardenRoom, (gardenRoom) => gardenRoom.id)
-  @JoinColumn({ name: "parent_room_id" })
-  parent_room_id: number
-
   @OneToOne(type => User, (user) => user.id)
   @JoinColumn({ name: "owner", })
   owner: number

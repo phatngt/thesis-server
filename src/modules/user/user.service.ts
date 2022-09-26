@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserCreateDTO, UserUpdateDTO } from 'src/dto/user';
 import { Roles, User, UserType } from 'src/models/index';
 import { Repository } from 'typeorm';
-import { auditAdd } from "src/helpers/index";
+import { auditAdd, auditUpdate } from "src/helpers/index";
 import { UserPermision, UserTypes } from 'src/constants/user';
 import { BaseCRUD } from 'src/modules/shared/base/crud.database';
 @Injectable()
@@ -55,7 +55,6 @@ export class UserService extends BaseCRUD {
 
       if (!role) throw new HttpException("Role user not existed", 500);
 
-
       const type = await this.userTypeRepository.findOneBy({ name: UserTypes.CLIENT });
       if (!type) throw new HttpException("Type user not existed", 500);
 
@@ -69,11 +68,14 @@ export class UserService extends BaseCRUD {
   }
 
   // TODO: Update DTO -> TYPE
-  async update(id: number, data: UserUpdateDTO) {
+  async update(id: number, data: UserUpdateDTO, user: User) {
     try {
       const user = await this.getOne({ where: { id } });
       if (!user) throw new HttpException("User not existed", 409);
-      const { password, ...result } = await this.updateById(id, data, user);
+
+      const auditData = { ...data, ...auditUpdate(user) }
+      const { password, ...result } = await this.updateById(id, auditData, user);
+
       return result;
     } catch (error) {
       console.log("ERROR: ", error);

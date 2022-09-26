@@ -22,10 +22,8 @@ export class GardenRoomService extends BaseCRUD {
 
   async createRoom(data: GardenRoomType, user: User) {
     try {
-      const parentId = data.parent_room_id ? await this.getById(data.parent_room_id) : null;
-      const sufficientData = !parentId ? { ...data, parent_room_id: null, owner: user.id } : { ...data, parent_room_id: parentId, owner: user.id };
+      return await this.create({ ...data, owner: user.id, image: "" }, user);
 
-      return await this.create(sufficientData, user)
     } catch (error) {
       console.log("ERROR: ", error);
       return new HttpException(error, 500);
@@ -34,11 +32,7 @@ export class GardenRoomService extends BaseCRUD {
 
   async updateRoom(id: number, data: GardenRoomUpdate, user: User) {
     try {
-      const parentId = data.parent_room_id ? await this.getById(data.parent_room_id) : null;
-      const sufficientData = !parentId ? { ...data, parent_room_id: null, owner: user.id } : { ...data, parent_room_id: parentId, owner: user.id };
-
-      const result = await this.updateById(id, sufficientData, user);
-      console.log("result: ", result);
+      const result = await this.updateById(id, { ...data, owner: user.id }, user);
       return result;
     } catch (error) {
       console.log("ERROR: ", error);

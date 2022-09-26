@@ -20,7 +20,14 @@ export class createPlantsTable1661584618375 implements MigrationInterface {
                         name: "name",
                         type: "text"
                     },
-
+                    {
+                        name: "career_guide",
+                        type: "text"
+                    },
+                    {
+                        name: "color",
+                        type: "varchar"
+                    },
                     {
                         name: "age",
                         type: "int"

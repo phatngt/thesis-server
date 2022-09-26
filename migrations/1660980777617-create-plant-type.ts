@@ -24,10 +24,6 @@ export class creatPlantType1660980777617 implements MigrationInterface {
                         type: "text"
                     },
                     {
-                        name: "care_guide",
-                        type: "text"
-                    },
-                    {
                         name: "family",
                         type: "varchar"
                     },
@@ -37,10 +33,6 @@ export class creatPlantType1660980777617 implements MigrationInterface {
                     },
                     {
                         name: "species",
-                        type: "varchar"
-                    },
-                    {
-                        name: "color",
                         type: "varchar"
                     },
                     {

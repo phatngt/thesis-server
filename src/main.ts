@@ -19,7 +19,8 @@ async function bootstrap() {
     "optionsSuccessStatus": 204
   });
   app.useGlobalInterceptors(new HttpResponseInterceptor());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.enableCors();
   const configService = app.get(ConfigService);
   console.log("AWS_REGION: ", configService.get("AWS_REGION"))
   config.update({

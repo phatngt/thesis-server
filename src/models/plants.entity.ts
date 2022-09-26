@@ -1,13 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Audit } from "./audit.entity";
+import { GardenRoom } from "./garden-room.entity";
+import { PlantTypes } from "./plant-type.entity";
+import { User } from "./user.entity";
 
-export enum Light {
-  HIGH = "HIGH",
-  MEDIUM = "MEDIUM",
-  LOW = "LOW"
-}
 
-@Entity()
+@Entity({ name: 'plants' })
 export class Plants extends Audit {
   @PrimaryGeneratedColumn('increment')
   id: number
@@ -16,51 +14,27 @@ export class Plants extends Audit {
   name: string
 
   @Column()
-  description: string
-
-  @Column()
-  care_guide: string
-
-  @Column()
-  age: number
-
-
-  @Column('varchar', { array: true })
-  image: string[]
-
-  @Column()
-  family: string
-
-  @Column()
-  genus: string
-
-  @Column()
-  species: string
+  career_guide: string
 
   @Column()
   color: string
 
   @Column()
-  decoration_location: string
+  age: number
 
-  @Column({
-    type: 'enum',
-    enum: Light,
-    default: Light.MEDIUM
-  })
-  light: Light
+  @Column('text', { array: true })
+  image: string[]
 
-  @Column()
-  size: number
+  @ManyToMany((type) => GardenRoom, (gardenRoom) => gardenRoom.id)
+  @JoinColumn({ name: "garden_room_id" })
+  garden_room_id: GardenRoom[]
 
-  @Column()
-  location: string
+  @OneToOne((type) => User, (user) => user.id)
+  @JoinColumn({ name: "owner" })
+  owner: User
 
-  // @OneToOne(type => GardenRoom, (gardenRoom) => gardenRoom.id)
-  // @JoinColumn({ name: "parent_room_id" })
-  // parent_room_id: number
+  @OneToOne((type) => PlantTypes, (plantType) => plantType.id)
+  @JoinColumn({ name: "plant_type_id" })
+  plant_type_id: PlantTypes
 
-  // @OneToOne(type => User, (user) => user.id)
-  // @JoinColumn({ name: "owner", })
-  // owner: number
 }
