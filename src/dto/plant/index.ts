@@ -20,7 +20,7 @@ export class PlantDTO {
   @MinLength(1)
   @MaxLength(1000)
   @IsOptional()
-  career_guide: string
+  careerGuide: string
 
   @ApiProperty({
     description: "Plant species",
@@ -43,14 +43,14 @@ export class PlantDTO {
 
   @ApiProperty({ type: 'array', items: { type: 'string', format: 'binary' } })
   @ApiPropertyOptional()
-  files: any
+  images: any
 
   @ApiProperty({
     description: "Plant type id",
     default: 1,
     type: 'int'
   })
-  plant_type_id: number
+  plantTypeId: number
 
 }
 
@@ -105,8 +105,6 @@ export class PlantTypeDTO {
   @IsOptional()
   species: string
 
-
-
   @ApiProperty({
     description: "Plant species",
     default: "Abc"
@@ -116,6 +114,32 @@ export class PlantTypeDTO {
   @MaxLength(10)
   @IsOptional()
   light: string
+}
 
+export class UpdatePlantDTO {
+  @ApiProperty({
+    description: "Plant name",
+    default: "Rose"
+  })
+  @IsString()
+  @MinLength(1)
+  @MaxLength(100)
+  @IsOptional()
+  name: string
 
+  @ApiProperty({
+    description: "Plant career guide",
+    default: "Water on morning ..."
+  })
+  @ApiPropertyOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(1000)
+  @IsOptional()
+  career_guide: string
+
+  @ApiProperty({ type: 'array', items: { type: 'string', format: 'binary' } })
+  @ApiPropertyOptional()
+  @IsOptional()
+  images: any
 }

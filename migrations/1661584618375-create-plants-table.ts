@@ -22,55 +22,47 @@ export class createPlantsTable1661584618375 implements MigrationInterface {
                     },
                     {
                         name: "career_guide",
-                        type: "text"
+                        type: "text",
+                        isNullable: true
+
                     },
                     {
                         name: "color",
-                        type: "varchar"
+                        type: "varchar",
+                        isNullable: true
+
                     },
                     {
                         name: "age",
-                        type: "int"
+                        type: "int",
+                        isNullable: true
+
                     },
 
                     {
                         name: "image",
-                        type: "varchar[]"
-                    },
+                        type: "varchar[]",
+                        isNullable: true
 
-                    {
-                        name: "decoration_location",
-                        type: "varchar"
                     },
-
                     {
                         name: "is_deleted",
                         type: "boolean",
                         default: false
                     },
                     {
-                        name: "add_by",
-                        type: "int",
+                        name: "create_at",
+                        type: "timestamp",
                         isNullable: true
 
                     },
                     {
-                        name: "add_on",
+                        name: "update_at",
                         type: "timestamp",
                         isNullable: true
                     },
                     {
-                        name: "upd_by",
-                        type: "int",
-                        isNullable: true
-                    },
-                    {
-                        name: "upd_on",
-                        type: "timestamp",
-                        isNullable: true
-                    },
-                    {
-                        name: "garden_room_id",
+                        name: "garden_id",
                         type: "int",
                         isNullable: true
                     },
@@ -84,6 +76,7 @@ export class createPlantsTable1661584618375 implements MigrationInterface {
                         type: "int",
                         isNullable: false
                     }
+
                 ]
             })
         );
@@ -91,9 +84,9 @@ export class createPlantsTable1661584618375 implements MigrationInterface {
         await queryRunner.createForeignKey(
             "plants", // The foreign key in there.
             new TableForeignKey({
-                columnNames: ["garden_room_id"],
+                columnNames: ["garden_id"],
                 referencedColumnNames: ["id"],
-                referencedTableName: "garden_room",
+                referencedTableName: "garden",
                 onDelete: "CASCADE"
             })
         )
@@ -123,7 +116,7 @@ export class createPlantsTable1661584618375 implements MigrationInterface {
         /** Drop fofeign key **/
         const table = await queryRunner.getTable("plants");
         const fks = table.foreignKeys.filter((fk) =>
-            (fk.columnNames.indexOf("garden_room_id") !== -1) ||
+            (fk.columnNames.indexOf("garden_id") !== -1) ||
             (fk.columnNames.indexOf("owner") !== -1) ||
             (fk.columnNames.indexOf("plant_type") !== -1))
             ;

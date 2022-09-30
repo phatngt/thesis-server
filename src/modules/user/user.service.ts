@@ -33,7 +33,7 @@ export class UserService extends BaseCRUD {
     }
   }
 
-  async findByEmail(email: string) {
+  async getByEmail(email: string) {
     try {
       const user = await this.getOne({ email: email }, { relations: ['role', 'user_type'] });
       if (!user) {

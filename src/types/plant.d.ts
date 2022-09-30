@@ -1,4 +1,3 @@
-import { ImageType } from "./file"
 
 export interface PlantType {
   name: string
@@ -10,12 +9,18 @@ export interface PlantType {
 
 }
 
-export interface Plant {
+export interface CreatePlantType {
   name: string
-  career_guide?: string
+  careerGuide?: string
   age?: number
   color?: string
-  garden_room_id?: number
-  plant_type_id: number
+  gardenId?: number
+  plantTypeId: number
+  files?: any
+}
+
+export interface UpdatePlantType {
+  name?: string
+  career_guide?: string
   files?: any
 }

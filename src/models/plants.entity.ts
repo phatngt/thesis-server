@@ -1,40 +1,56 @@
-import { Column, Entity, JoinColumn, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Audit } from "./audit.entity";
-import { GardenRoom } from "./garden-room.entity";
+import { Garden } from "./garden.entity";
 import { PlantTypes } from "./plant-type.entity";
 import { User } from "./user.entity";
 
 
 @Entity({ name: 'plants' })
 export class Plants extends Audit {
-  @PrimaryGeneratedColumn('increment')
-  id: number
+  @PrimaryGeneratedColumn({
+    name: "id",
+    type: "int"
+  })
+  id: number;
 
-  @Column()
-  name: string
+  @Column({
+    name: "name"
+  })
+  name: string;
 
-  @Column()
-  career_guide: string
+  @Column({
+    name: "career_guide",
+    nullable: true
+  })
+  careerGuide: string;
 
-  @Column()
-  color: string
+  @Column({
+    name: "color"
+  })
+  color: string;
 
-  @Column()
-  age: number
+  @Column({
+    name: "age"
+  })
+  age: number;
 
-  @Column('text', { array: true })
-  image: string[]
+  @Column({
+    name: "image",
+    type: "text",
+    array: true
+  })
+  image: string[];
 
-  @ManyToMany((type) => GardenRoom, (gardenRoom) => gardenRoom.id)
-  @JoinColumn({ name: "garden_room_id" })
-  garden_room_id: GardenRoom[]
+  @ManyToOne(() => Garden, (garden) => garden.plants)
+  @JoinColumn({ name: "garden_id" })
+  garden: Garden;
 
-  @OneToOne((type) => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.plants)
   @JoinColumn({ name: "owner" })
-  owner: User
+  owner: User;
 
-  @OneToOne((type) => PlantTypes, (plantType) => plantType.id)
+  @OneToOne(() => PlantTypes, (plantType) => plantType.id)
   @JoinColumn({ name: "plant_type_id" })
-  plant_type_id: PlantTypes
+  plantTypeId: PlantTypes;
 
 }

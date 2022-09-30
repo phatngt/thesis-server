@@ -37,8 +37,7 @@ export class creatPlantType1660980777617 implements MigrationInterface {
                     },
                     {
                         name: "light",
-                        type: "enum",
-                        enum: ['HIGH', 'MEDIUM', 'LOW'],
+                        type: "varchar(50)",
                         isNullable: true
                     },
                     {
@@ -47,23 +46,13 @@ export class creatPlantType1660980777617 implements MigrationInterface {
                         default: false
                     },
                     {
-                        name: "add_by",
-                        type: "int",
+                        name: "create_at",
+                        type: "timestamp",
                         isNullable: true
 
                     },
                     {
-                        name: "add_on",
-                        type: "timestamp",
-                        isNullable: true
-                    },
-                    {
-                        name: "upd_by",
-                        type: "int",
-                        isNullable: true
-                    },
-                    {
-                        name: "upd_on",
+                        name: "update_at",
                         type: "timestamp",
                         isNullable: true
                     },

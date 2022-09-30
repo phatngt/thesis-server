@@ -1,38 +1,45 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { Audit } from "./audit.entity";
 
-export enum Light {
-  HIGH = "HIGH",
-  MEDIUM = "MEDIUM",
-  LOW = "LOW"
-}
-
 @Entity({ name: 'plant_type' })
 export class PlantTypes extends Audit {
-  @PrimaryGeneratedColumn('increment')
-  id: number
+  @PrimaryGeneratedColumn({
+    name: "id",
+    type: "int"
+  })
+  id: number;
 
   @Column({
+    name: "name",
     nullable: false,
     unique: true,
   })
-  name: string
-
-  @Column()
-  description: string
-
-  @Column()
-  family: string
-
-  @Column()
-  genus: string
-
-  @Column()
-  species: string
+  name: string;
 
   @Column({
-    default: Light.MEDIUM
+    name: "description"
   })
-  light: string
+  description: string;
+
+  @Column({
+    name: "family"
+  })
+  family: string;
+
+  @Column({
+    name: "genus"
+  })
+  genus: string;
+
+  @Column({
+    name: "species"
+  })
+  species: string;
+
+  @Column({
+    name: "light",
+    default: "MEDIUM"
+  })
+  light: string;
 
 }
