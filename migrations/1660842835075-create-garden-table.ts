@@ -5,7 +5,7 @@ export class createRoomTable1660842835075 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: "garden_room",
+                name: "garden",
                 columns: [
                     {
                         name: "id",
@@ -39,31 +39,15 @@ export class createRoomTable1660842835075 implements MigrationInterface {
                         default: false
                     },
                     {
-                        name: "add_by",
-                        type: "int",
+                        name: "create_at",
+                        type: "timestamp",
                         isNullable: true
 
                     },
                     {
-                        name: "add_on",
+                        name: "update_at",
                         type: "timestamp",
                         isNullable: true
-                    },
-                    {
-                        name: "upd_by",
-                        type: "int",
-                        isNullable: true
-                    },
-                    {
-                        name: "upd_on",
-                        type: "timestamp",
-                        isNullable: true
-                    },
-                    {
-                        name: "parent_room_id",
-                        type: "int",
-                        isNullable: true
-
                     },
                     {
                         name: "owner",
@@ -74,7 +58,7 @@ export class createRoomTable1660842835075 implements MigrationInterface {
         );
         // Create foreign keys
         await queryRunner.createForeignKey(
-            "garden_room",
+            "garden",
             new TableForeignKey({
                 columnNames: ["owner"],
                 referencedColumnNames: ["id"],
@@ -83,23 +67,13 @@ export class createRoomTable1660842835075 implements MigrationInterface {
             })
         )
 
-        await queryRunner.createForeignKey(
-            "garden_room",
-            new TableForeignKey({
-                columnNames: ["parent_room_id"],
-                referencedColumnNames: ["id"],
-                referencedTableName: "garden_room",
-                onDelete: "CASCADE"
-            })
-        )
-
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        const table = await queryRunner.getTable("garden_room");
-        const foreignKeys = table.foreignKeys.filter((fk) => (fk.columnNames.indexOf("owner") !== -1) || fk.columnNames.indexOf("parent_room_id") !== -1)
-        await queryRunner.dropForeignKeys("garden_room", foreignKeys);
-        await queryRunner.dropTable("garden_room");
+        const table = await queryRunner.getTable("garden");
+        const foreignKeys = table.foreignKeys.filter((fk) => (fk.columnNames.indexOf("owner") !== -1));
+        await queryRunner.dropForeignKeys("garden", foreignKeys);
+        await queryRunner.dropTable("garden");
     }
 
 }

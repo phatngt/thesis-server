@@ -2,12 +2,20 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'role' })
 export class Roles {
-  @PrimaryGeneratedColumn('increment')
-  id: number
+  @PrimaryGeneratedColumn({
+    name: "id",
+    type: "int"
+  })
+  id: number;
 
-  @Column()
-  name: string
+  @Column({
+    name: "name"
+  })
+  name: string;
 
-  @Column({ nullable: true })
-  desc: string
+  @Column({
+    name: "desc",
+    nullable: true
+  })
+  desc: string;
 }

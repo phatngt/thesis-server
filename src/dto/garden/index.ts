@@ -1,7 +1,7 @@
-import { ApiProperty } from "@nestjs/swagger"
-import { IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator"
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator";
 
-export class GardenRoomDTO {
+export class GardenDTO {
   @ApiProperty({
     description: "Name of the garden",
     default: "Abc"
@@ -9,7 +9,7 @@ export class GardenRoomDTO {
   @IsString()
   @MinLength(1)
   @MaxLength(100)
-  name: string
+  name: string;
 
   @ApiProperty({
     description: " Image of the garden",
@@ -18,7 +18,7 @@ export class GardenRoomDTO {
   @IsString()
   @MaxLength(1000)
   @IsOptional()
-  image: string
+  image: string;
 
   @ApiProperty({
     description: "Quatity of the garden",
@@ -27,7 +27,7 @@ export class GardenRoomDTO {
   @IsNumber()
   @Min(0)
   @IsOptional()
-  size: number
+  size: number;
 
   @ApiProperty({
     description: "Location of the garden",
@@ -35,16 +35,16 @@ export class GardenRoomDTO {
   })
   @IsOptional()
   @MaxLength(100)
-  location: string
+  location: string;
   @ApiProperty({
     description: "Belong to another garden",
     default: 0
   })
   @IsOptional()
-  parent_room_id: number
+  parent_id: number;
 }
 
-export class GardenRoomUpdateDTO {
+export class GardenUpdateDTO {
   @ApiProperty({
     description: "Name of the garden",
     default: "Abc"
@@ -53,7 +53,7 @@ export class GardenRoomUpdateDTO {
   @MinLength(1)
   @MaxLength(100)
   @IsOptional()
-  name: string
+  name: string;
 
   @ApiProperty({
     description: " Image of the garden",
@@ -62,7 +62,7 @@ export class GardenRoomUpdateDTO {
   @IsString()
   @MaxLength(1000)
   @IsOptional()
-  image: string
+  image: string;
 
   @ApiProperty({
     description: "Quatity of the garden",
@@ -71,7 +71,7 @@ export class GardenRoomUpdateDTO {
   @IsNumber()
   @Min(0)
   @IsOptional()
-  size: number
+  size: number;
 
   @ApiProperty({
     description: "Location of the garden",
@@ -79,11 +79,11 @@ export class GardenRoomUpdateDTO {
   })
   @IsOptional()
   @MaxLength(100)
-  location: string
+  location: string;
   @ApiProperty({
     description: "Belong to another garden",
     default: 0
   })
   @IsOptional()
-  parent_room_id: number
+  parent__id: number;
 }

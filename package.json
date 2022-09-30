@@ -36,6 +36,7 @@
     "@nestjs/swagger": "^6.0.5",
     "@nestjs/typeorm": "^8.1.2",
     "@types/aws-sdk": "^2.7.0",
+    "@types/multer": "^1.4.7",
     "aws-sdk": "^2.1210.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",

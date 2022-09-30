@@ -59,23 +59,13 @@ export class createRoleTable1660501295721 implements MigrationInterface {
                         default: false
                     },
                     {
-                        name: "add_by",
-                        type: "int",
+                        name: "create_at",
+                        type: "timestamp",
                         isNullable: true
 
                     },
                     {
-                        name: "add_on",
-                        type: "timestamp",
-                        isNullable: true
-                    },
-                    {
-                        name: "upd_by",
-                        type: "int",
-                        isNullable: true
-                    },
-                    {
-                        name: "upd_on",
+                        name: "update_at",
                         type: "timestamp",
                         isNullable: true
                     },

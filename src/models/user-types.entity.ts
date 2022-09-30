@@ -2,13 +2,19 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'user_type' })
 export class UserType {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryGeneratedColumn({
+    name: "id",
+    type: "int"
+  })
   id: number;
 
-  @Column()
+  @Column({
+    name: "name"
+  })
   name: string;
 
   @Column({
+    name: "desc",
     nullable: true
   })
   desc: string;

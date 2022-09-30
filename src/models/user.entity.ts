@@ -3,10 +3,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Audit } from './audit.entity';
+import { Plants } from "./plants.entity";
 import { Roles } from './roles.entity';
 import { UserType } from './user-types.entity';
 
@@ -45,12 +47,15 @@ export class User extends Audit {
   })
   is_premium: boolean;
 
-  @ManyToOne(type => Roles, (role) => role.name)
+  @ManyToOne(() => Roles, (role) => role.name)
   @JoinColumn({ name: 'role' })
-  role: Roles
+  role: Roles;
 
-  @ManyToOne(type => UserType, (usertype) => usertype.id)
+  @ManyToOne(() => UserType, (usertype) => usertype.id)
   @JoinColumn({ name: 'user_type' })
   user_type: UserType;
+
+  @OneToMany(() => Plants, (plants) => plants.owner)
+  plants: Plants;
 
 }

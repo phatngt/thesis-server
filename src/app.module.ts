@@ -7,8 +7,10 @@ import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { UserModule } from './modules/user/user.module';
-import { GardenRoomModule } from './modules/garden-room/garden-room.module';
 import { FileModule } from './modules/file/file.module';
+import { PlantModule } from './modules/plant/plant.module';
+import { GardenModule } from "./modules/garden/garden.module";
+import { CaarerModule } from './modules/caarer/caarer.module';
 
 @Module({
   imports: [
@@ -46,8 +48,10 @@ import { FileModule } from './modules/file/file.module';
     }),
     SharedModule,
     UserModule,
-    GardenRoomModule,
+    GardenModule,
     FileModule,
+    PlantModule,
+    CaarerModule
   ],
   controllers: [AppController],
   providers: [AppService],
