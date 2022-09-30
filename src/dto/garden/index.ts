@@ -1,53 +1,46 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+  Min,
+  MinLength,
+} from 'class-validator';
 
 export class GardenDTO {
   @ApiProperty({
-    description: "Name of the garden",
-    default: "Abc"
+    description: 'Name of the garden',
+    default: 'Abc',
   })
   @IsString()
   @MinLength(1)
   @MaxLength(100)
   name: string;
 
-  @ApiProperty({
-    description: " Image of the garden",
-    default: ""
-  })
-  @IsString()
-  @MaxLength(1000)
-  @IsOptional()
+  @ApiProperty({ type: 'string', format: 'binary' })
   image: string;
 
   @ApiProperty({
-    description: "Quatity of the garden",
-    default: 0
+    description: 'Quatity of the garden',
+    type: Number,
   })
-  @IsNumber()
-  @Min(0)
   @IsOptional()
   size: number;
 
   @ApiProperty({
-    description: "Location of the garden",
-    default: "East"
+    description: 'Location of the garden',
+    default: 'East',
   })
   @IsOptional()
   @MaxLength(100)
   location: string;
-  @ApiProperty({
-    description: "Belong to another garden",
-    default: 0
-  })
-  @IsOptional()
-  parent_id: number;
 }
 
 export class GardenUpdateDTO {
   @ApiProperty({
-    description: "Name of the garden",
-    default: "Abc"
+    description: 'Name of the garden',
+    default: 'Abc',
   })
   @IsString()
   @MinLength(1)
@@ -56,8 +49,8 @@ export class GardenUpdateDTO {
   name: string;
 
   @ApiProperty({
-    description: " Image of the garden",
-    default: ""
+    description: ' Image of the garden',
+    default: '',
   })
   @IsString()
   @MaxLength(1000)
@@ -65,8 +58,8 @@ export class GardenUpdateDTO {
   image: string;
 
   @ApiProperty({
-    description: "Quatity of the garden",
-    default: 0
+    description: 'Quatity of the garden',
+    default: 0,
   })
   @IsNumber()
   @Min(0)
@@ -74,15 +67,15 @@ export class GardenUpdateDTO {
   size: number;
 
   @ApiProperty({
-    description: "Location of the garden",
-    default: "East"
+    description: 'Location of the garden',
+    default: 'East',
   })
   @IsOptional()
   @MaxLength(100)
   location: string;
   @ApiProperty({
-    description: "Belong to another garden",
-    default: 0
+    description: 'Belong to another garden',
+    default: 0,
   })
   @IsOptional()
   parent__id: number;

@@ -10,7 +10,6 @@ import { LocalStrategy } from './client-local.strategy';
 import { JwtStrategy } from './client-jwt.strategy';
 import { RolesGuard } from './client-roles.guard';
 
-
 @Module({
   imports: [
     UserModule,
@@ -20,11 +19,13 @@ import { RolesGuard } from './client-roles.guard';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: `${configService.get<string>('JWT_EXPIRATION_TIME')}s` },
-      })
+        signOptions: {
+          expiresIn: `${configService.get<string>('JWT_EXPIRATION_TIME')}s`,
+        },
+      }),
     }),
   ],
   providers: [AuthService, UserService, JwtStrategy, LocalStrategy, RolesGuard],
-  controllers: [AuthController]
+  controllers: [AuthController],
 })
-export class AuthModule { }
+export class AuthModule {}

@@ -1,11 +1,11 @@
-import { createHash } from "crypto";
+import { createHash } from 'crypto';
 
 export const auditAdd = (user?: any) => ({
-  createAt: new Date()
+  createAt: new Date(),
 });
 
 export const auditUpdate = (user: any) => ({
-  updateAt: new Date()
+  updateAt: new Date(),
 });
 
 export const sha512 = (text: string) => {

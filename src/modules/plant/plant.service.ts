@@ -16,28 +16,33 @@ export class PlantService extends BaseCRUD {
     private plantRepository: Repository<Plants>,
     @InjectRepository(PlantTypes)
     private plantTypeRepository: Repository<PlantTypes>,
-    private fileService: FileService
+    private fileService: FileService,
   ) {
     super(plantRepository);
   }
 
-  async createPlantType(plantType: PlantType, admin: User): Promise<PlantTypes> {
+  async createPlantType(
+    plantType: PlantType,
+    admin: User,
+  ): Promise<PlantTypes> {
     try {
-      const pType = await this.plantTypeRepository.findOneBy({ name: plantType.name });
-      if (pType) throw new HttpException("Plant type has existed", 409);
+      const pType = await this.plantTypeRepository.findOneBy({
+        name: plantType.name,
+      });
+      if (pType) throw new HttpException('Plant type has existed', 409);
 
       const newPType = await this.plantTypeRepository.save({
         name: plantType.name,
-        description: plantType.description ?? "",
-        family: plantType.family ?? "",
-        genus: plantType.genus ?? "",
+        description: plantType.description ?? '',
+        family: plantType.family ?? '',
+        genus: plantType.genus ?? '',
         species: plantType.species,
-        light: plantType.light ?? "MEDIUM",
-        ...auditAdd(admin)
-      })
+        light: plantType.light ?? 'MEDIUM',
+        ...auditAdd(admin),
+      });
       return newPType;
     } catch (error) {
-      console.log("ERROR: ", error)
+      console.log('ERROR: ', error);
       throw error;
     }
   }
@@ -45,53 +50,58 @@ export class PlantService extends BaseCRUD {
   async createPlant(plantData: CreatePlantType, user: User) {
     try {
       // Get plant type
-      const pType = await this.plantTypeRepository.findOneBy({ id: plantData.plantTypeId });
+      const pType = await this.plantTypeRepository.findOneBy({
+        id: plantData.plantTypeId,
+      });
       if (!pType) throw new HttpException("Plant type don't existed", 500);
       // Upload image
-      const linkImages: string[] = []
+      const linkImages: string[] = [];
       const listImages = plantData.files;
       for (let i = 0; i < listImages.length; ++i) {
-        let imageLink = await this.fileService.uploadImage(listImages[i].buffer, plantData.name);
+        const imageLink = await this.fileService.uploadImage(
+          listImages[i].buffer,
+          plantData.name,
+        );
         linkImages.push(imageLink);
       }
 
-      delete plantData["files"]
+      delete plantData['files'];
       const updateData = { ...plantData, image: linkImages, owner: user };
-      console.log("data: ", updateData);
+      console.log('data: ', updateData);
       const result = this.create(updateData, user);
       return result;
     } catch (error) {
-      console.log("ERROR: ", error);
+      console.log('ERROR: ', error);
       return error;
     }
   }
 
   async updatePlant(id: number, plantData: UpdatePlantType, user: User) {
     try {
-      const linkImages: string[] = []
+      const linkImages: string[] = [];
       const listImages = plantData.files;
       for (let i = 0; i < listImages.length; ++i) {
-        let imageLink = await this.fileService.uploadImage(listImages[i].buffer, plantData.name);
+        const imageLink = await this.fileService.uploadImage(
+          listImages[i].buffer,
+          plantData.name,
+        );
         linkImages.push(imageLink);
       }
 
-      delete plantData["images"]
+      delete plantData['images'];
       const updateData = { ...plantData, image: linkImages };
       const result = this.updateById(id, updateData, user);
       return result;
-
     } catch (error) {
-      console.log("ERROR: ", error);
+      console.log('ERROR: ', error);
       return error;
     }
   }
 
   async deletePlant(id: number, user: User) {
     try {
-      const plant = this.getOne({ id: id, owner: user })
-      console.log("plant: ", plant);
-    } catch (error) {
-
-    }
+      const plant = this.getOne({ id: id, owner: user });
+      console.log('plant: ', plant);
+    } catch (error) {}
   }
 }

@@ -1,9 +1,9 @@
 export enum UserPermision {
   ADMIN = 'admin',
-  USER = 'user'
+  USER = 'user',
 }
 
 export enum UserTypes {
   ADMIN = 'admin',
-  CLIENT = 'client'
+  CLIENT = 'client',
 }

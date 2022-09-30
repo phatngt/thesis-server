@@ -1,45 +1,44 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { Audit } from "./audit.entity";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Audit } from './audit.entity';
 
 @Entity({ name: 'plant_type' })
 export class PlantTypes extends Audit {
   @PrimaryGeneratedColumn({
-    name: "id",
-    type: "int"
+    name: 'id',
+    type: 'int',
   })
   id: number;
 
   @Column({
-    name: "name",
+    name: 'name',
     nullable: false,
     unique: true,
   })
   name: string;
 
   @Column({
-    name: "description"
+    name: 'description',
   })
   description: string;
 
   @Column({
-    name: "family"
+    name: 'family',
   })
   family: string;
 
   @Column({
-    name: "genus"
+    name: 'genus',
   })
   genus: string;
 
   @Column({
-    name: "species"
+    name: 'species',
   })
   species: string;
 
   @Column({
-    name: "light",
-    default: "MEDIUM"
+    name: 'light',
+    default: 'MEDIUM',
   })
   light: string;
-
 }

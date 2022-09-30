@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Role } from 'src/modules/auth/client-roles.decorator';
 import { RolesGuard } from 'src/modules/auth/client-roles.guard';
@@ -10,9 +19,7 @@ import { AppRequest } from 'src/types';
 @ApiTags('User')
 @Controller('user')
 export class UserController {
-  constructor(
-    private userService: UserService
-  ) { }
+  constructor(private userService: UserService) {}
 
   @ApiBearerAuth()
   @UseGuards(RolesGuard)
@@ -26,7 +33,11 @@ export class UserController {
   @UseGuards(RolesGuard)
   @Role(Roles.USER)
   @Patch('update/:id')
-  async update(@Request() req: AppRequest, @Param('id') id: string, @Body() data: UserUpdateDTO) {
+  async update(
+    @Request() req: AppRequest,
+    @Param('id') id: string,
+    @Body() data: UserUpdateDTO,
+  ) {
     return this.userService.update(Number(id), data, req.user);
   }
 
@@ -35,6 +46,6 @@ export class UserController {
   @Role(Roles.ADMIN)
   @Delete('/delete/:id')
   async delete(@Param('id') id: string) {
-
+    console.log('here');
   }
 }

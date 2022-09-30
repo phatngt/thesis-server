@@ -1,11 +1,17 @@
-import { User } from "src/models";
-import { sha512 } from "src/helpers";
-import { DataSource, EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent } from "typeorm";
-import { Injectable } from "@nestjs/common";
+import { User } from 'src/models';
+import { sha512 } from 'src/helpers';
+import {
+  DataSource,
+  EntitySubscriberInterface,
+  EventSubscriber,
+  InsertEvent,
+  UpdateEvent,
+} from 'typeorm';
+import { Injectable } from '@nestjs/common';
 
 @EventSubscriber()
 @Injectable()
-export class UserSubcriber implements EntitySubscriberInterface<User>{
+export class UserSubcriber implements EntitySubscriberInterface<User> {
   constructor(dataSource: DataSource) {
     dataSource.subscribers.push(this);
   }
