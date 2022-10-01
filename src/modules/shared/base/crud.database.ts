@@ -161,10 +161,9 @@ export class BaseCRUD implements IBaseCRUD {
       .createQueryBuilder()
       .update(this.domainReposity.target)
       .set(data)
-      .where('id = :id AND owner = :user', { id: id, user: user.id })
+      .where('id = :id', { id: id })
       .returning('*')
       .execute();
-    console.log('result: ', result);
     if (result.raw[0]) return true;
     return false;
   }

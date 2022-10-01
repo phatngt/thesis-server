@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
   Param,
   Patch,
   Post,
@@ -16,7 +17,7 @@ import {
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/constants/decorator';
-import { PlantDTO, PlantTypeDTO, UpdatePlantDTO } from 'src/dto/plant';
+import { PlantCreateDTO, PlantTypeDTO, PlantUpdateDTO } from 'src/dto/plant';
 import { AppRequest } from 'src/types';
 import { Role } from '../auth/client-roles.decorator';
 import { RolesGuard } from '../auth/client-roles.guard';
@@ -61,11 +62,11 @@ export class PlantController {
   @Role(Roles.USER)
   @Post('/create')
   @ApiConsumes('multipart/form-data')
-  @ApiBody({ type: PlantDTO })
+  @ApiBody({ type: PlantCreateDTO })
   @UseInterceptors(FileFieldsInterceptor([{ name: 'images', maxCount: 6 }]))
   async createPlant(
     @Request() req: AppRequest,
-    @Body() data: PlantDTO,
+    @Body() data: PlantCreateDTO,
     @UploadedFiles() files: { images: Express.Multer.File[] },
   ) {
     try {
@@ -79,18 +80,24 @@ export class PlantController {
     }
   }
 
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard)
+  @Role(Roles.USER)
   @Patch('/:id')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: PlantUpdateDTO })
+  @UseInterceptors(FileFieldsInterceptor([{ name: 'images', maxCount: 6 }]))
   async updatePlant(
     @Param('id') id: string,
     @Request() req: AppRequest,
-    @Body() data: UpdatePlantDTO,
+    @Body() data: PlantUpdateDTO,
     @UploadedFiles() files: { images: Express.Multer.File[] },
   ) {
     try {
       const updateData = { ...data, files: files.images };
       const result = await this.plantService.updatePlant(
         parseInt(id),
-        data,
+        updateData,
         req.user,
       );
       return result;
@@ -100,14 +107,15 @@ export class PlantController {
     }
   }
 
-  // @ApiBearerAuth()
+  @ApiBearerAuth()
   @Delete('/:id')
   async deletePlant(@Param('id') id: string, @Request() req: AppRequest) {
     try {
-      return await this.plantService.deletePlant(parseInt(id), req.user);
+      if (!id) throw new HttpException('Bad request', 400);
+      return await this.plantService.deletePlant(Number(id), req.user);
     } catch (error) {
       console.log('ERROR: ', error);
-      return error.message;
+      return error;
     }
   }
 }

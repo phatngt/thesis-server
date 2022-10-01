@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNumber,
   IsOptional,
@@ -48,21 +48,14 @@ export class GardenUpdateDTO {
   @IsOptional()
   name: string;
 
-  @ApiProperty({
-    description: ' Image of the garden',
-    default: '',
-  })
-  @IsString()
-  @MaxLength(1000)
-  @IsOptional()
+  @ApiProperty({ type: 'string', format: 'binary' })
+  @ApiPropertyOptional()
   image: string;
 
   @ApiProperty({
     description: 'Quatity of the garden',
-    default: 0,
+    default: 5,
   })
-  @IsNumber()
-  @Min(0)
   @IsOptional()
   size: number;
 
@@ -73,10 +66,4 @@ export class GardenUpdateDTO {
   @IsOptional()
   @MaxLength(100)
   location: string;
-  @ApiProperty({
-    description: 'Belong to another garden',
-    default: 0,
-  })
-  @IsOptional()
-  parent__id: number;
 }

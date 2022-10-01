@@ -9,11 +9,10 @@ import {
   Post,
   Request,
   UploadedFile,
-  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Role } from 'src/modules/auth/client-roles.decorator';
 import { RolesGuard } from 'src/modules/auth/client-roles.guard';
 import { Roles } from 'src/constants/decorator';
@@ -63,8 +62,8 @@ export class GardenController {
   @ApiBearerAuth()
   @UseGuards(RolesGuard)
   @Role(Roles.USER)
-  @UseInterceptors(FileInterceptor('image'))
   @Post('/create')
+  @UseInterceptors(FileInterceptor('image'))
   @ApiConsumes('multipart/form-data')
   async create(
     @Request() req: AppRequest,
@@ -84,13 +83,21 @@ export class GardenController {
   @UseGuards(RolesGuard)
   @Role(Roles.USER)
   @Patch('/update/:id')
+  @UseInterceptors(FileInterceptor('image'))
+  @ApiConsumes('multipart/form-data')
   async update(
     @Param('id') id: string,
     @Request() req: AppRequest,
     @Body() data: GardenUpdateDTO,
+    @UploadedFile('file') file?: Express.Multer.File,
   ) {
-    if (!id) return new HttpException('Bad request', 400);
-    return this.gardenService.updateGarden(Number(id), data, req.user);
+    try {
+      if (!id) return new HttpException('Bad request', 400);
+      return this.gardenService.updateGarden(Number(id), data, req.user, file);
+    } catch (error) {
+      console.log('ERROR: ', error);
+      return error;
+    }
   }
 
   @ApiBearerAuth()
@@ -99,11 +106,7 @@ export class GardenController {
   @Delete('/:id')
   async delete(@Param('id') id: string, @Request() req: AppRequest) {
     if (!id) return new HttpException('Bad request', 400);
-    const result = await this.gardenService.softDeleteById(
-      Number(id),
-      req.user,
-    );
-    if (!result) return new HttpException('Delete not success!!', 403);
-    return true;
+    const result = await this.gardenService.deleteGarden(Number(id), req.user);
+    return result;
   }
 }

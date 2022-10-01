@@ -35,13 +35,46 @@ export class GardenService extends BaseCRUD {
     }
   }
 
-  async updateGarden(id: number, data: GardenUpdate, user: User) {
+  async updateGarden(
+    id: number,
+    data: GardenUpdate,
+    user: User,
+    file?: Express.Multer.File,
+  ) {
     try {
-      const result = await this.updateById(id, { ...data, owner: user }, user);
+      const garden = await this.getById(id, {
+        pairWithId: { owner: { id: user.id } },
+        relations: ['owner'],
+      });
+      if (!garden) throw new HttpException('Forbidden', 403);
+      if (file) {
+        const url = await this.fileService.uploadImage(
+          file.buffer,
+          file.originalname,
+        );
+        data = { ...data, image: url };
+      }
+      const result = await this.updateById(id, { ...data }, user);
       return result;
     } catch (error) {
       console.log('ERROR: ', error);
       return new HttpException(error, 500);
+    }
+  }
+
+  async deleteGarden(id: number, user?: User) {
+    try {
+      const garden = await this.getById(id, {
+        pairWithId: { owner: { id: user.id } },
+        relations: ['owner'],
+      });
+      if (!garden) throw new HttpException('Forbidden', 403);
+      const success = this.softDeleteById(id, user);
+      if (!success) throw new HttpException('Forbidden', 403);
+      return true;
+    } catch (error) {
+      console.log('ERROR: ', error);
+      return error;
     }
   }
 }

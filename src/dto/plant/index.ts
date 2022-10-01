@@ -11,7 +11,7 @@ import {
   MinLength,
 } from 'class-validator';
 
-export class PlantDTO {
+export class PlantCreateDTO {
   @ApiProperty({
     description: 'Plant name',
     default: 'Rose',
@@ -124,7 +124,7 @@ export class PlantTypeDTO {
   light: string;
 }
 
-export class UpdatePlantDTO {
+export class PlantUpdateDTO {
   @ApiProperty({
     description: 'Plant name',
     default: 'Rose',

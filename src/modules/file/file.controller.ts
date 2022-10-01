@@ -24,9 +24,9 @@ import { FileExtender } from './interceptors/file.interceptor';
 export class FileController {
   constructor(private fileService: FileService) {}
 
-  // @ApiBearerAuth()
-  // @UseGuards(RolesGuard)
-  // @Role(Roles.USER)
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard)
+  @Role(Roles.USER)
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
@@ -53,5 +53,26 @@ export class FileController {
       data: e.buffer,
     }));
     return await this.fileService.uploadMultiImage(data);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard)
+  @Role(Roles.USER)
+  @Post('/upload-image')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(@UploadedFile('file') file: Express.Multer.File) {
+    return await this.fileService.uploadImage(file.buffer, file.originalname);
   }
 }

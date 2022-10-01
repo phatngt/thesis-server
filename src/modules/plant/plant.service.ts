@@ -100,8 +100,18 @@ export class PlantService extends BaseCRUD {
 
   async deletePlant(id: number, user: User) {
     try {
-      const plant = this.getOne({ id: id, owner: user });
-      console.log('plant: ', plant);
-    } catch (error) {}
+      const plant = await this.getById(id, {
+        pairWithId: { owner: { id: user.id } },
+        relations: ['owner'],
+      });
+
+      if (!plant) throw new HttpException('Forbidden', 403);
+      const success = await this.softDeleteById(id, user);
+      if (!success) throw new HttpException('Forbiden', 403);
+      return true;
+    } catch (error) {
+      console.log('ERROR: ', error);
+      return error;
+    }
   }
 }

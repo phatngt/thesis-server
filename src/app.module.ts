@@ -10,7 +10,7 @@ import { UserModule } from './modules/user/user.module';
 import { FileModule } from './modules/file/file.module';
 import { PlantModule } from './modules/plant/plant.module';
 import { GardenModule } from './modules/garden/garden.module';
-import { CaarerModule } from './modules/caarer/caarer.module';
+import { CareerModule } from './modules/career/career.module';
 
 @Module({
   imports: [
@@ -67,7 +67,7 @@ import { CaarerModule } from './modules/caarer/caarer.module';
     GardenModule,
     FileModule,
     PlantModule,
-    CaarerModule,
+    CareerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
