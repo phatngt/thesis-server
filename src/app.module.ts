@@ -9,7 +9,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { UserModule } from './modules/user/user.module';
 import { FileModule } from './modules/file/file.module';
 import { PlantModule } from './modules/plant/plant.module';
-import { GardenModule } from './modules/garden/garden.module';
+import { GardenModule } from "./modules/garden/garden.module";
 import { CaarerModule } from './modules/caarer/caarer.module';
 
 @Module({
@@ -17,7 +17,7 @@ import { CaarerModule } from './modules/caarer/caarer.module';
     AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.development.env', '.env'],
+      envFilePath: ['.development.env', '.env']
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -29,47 +29,31 @@ import { CaarerModule } from './modules/caarer/caarer.module';
         username: configService.get<string>('DB_USER'),
         password: configService.get<string>('DB_PASS'),
         database: configService.get<string>('DB_NAME'),
-        entities: ['dist/**/*.entity{.ts,.js}'],
-        extra:
-          configService.get<string>('NODE_ENV') == 'production'
-            ? {
-                ssl: {
-                  rejectUnauthorized: false,
-                },
-              }
-            : {},
-      }),
+        entities: ["dist/**/*.entity{.ts,.js}"],
+        extra: configService.get<string>('NODE_ENV') == "production" ? {
+          "ssl": {
+            "rejectUnauthorized": false
+          }
+        } : {}
+      })
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        uri:
-          configService.get<string>('NODE_ENV') == 'production'
-            ? `mongodb+srv://${process.env.MONGO_USER}:${
-                process.env.MONGO_PASSWORD
-              }@${process.env.MONGO_HOST}/${
-                process.env.MONGO_NAME || 'admin'
-              }?retryWrites=true&w=majority`
-            : `mongodb://${configService.get<string>(
-                'MONGO_USER',
-              )}:${configService.get<string>(
-                'MONGO_PASSWORD',
-              )}@${configService.get<string>('MONGO_HOST')}:27017/${
-                configService.get<string>('MONGO_NAME') || 'admin'
-              }?authSource=${
-                configService.get<string>('MONGO_AUTHDB') || 'admin'
-              }`,
-      }),
+        uri: configService.get<string>('NODE_ENV') == "production" ?
+          `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}/${process.env.MONGO_NAME || 'admin'}?retryWrites=true&w=majority` :
+          `mongodb://${configService.get<string>('MONGO_USER')}:${configService.get<string>('MONGO_PASSWORD')}@${configService.get<string>('MONGO_HOST')}:27017/${configService.get<string>('MONGO_NAME') || 'admin'}?authSource=${configService.get<string>('MONGO_AUTHDB') || 'admin'}`
+      })
     }),
     SharedModule,
     UserModule,
     GardenModule,
     FileModule,
     PlantModule,
-    CaarerModule,
+    CaarerModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

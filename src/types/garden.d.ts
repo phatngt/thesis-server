@@ -1,8 +1,6 @@
-import { IImageType } from './file';
-
 export interface GardenType {
   name: string;
-  image?: IImageType;
+  image?: string;
   size?: number;
   location?: string;
 }

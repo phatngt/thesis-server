@@ -1,4 +1,4 @@
-import { User } from 'src/models';
+import { User } from "src/models";
 
 export interface PagingResponse<T> {
   rows: T[];
@@ -11,13 +11,13 @@ export interface FindOptions {
   order: any;
   select: string[];
   relations: string[];
-  pairWithId: any;
+  pairWithId: any
 }
 
 export interface IBaseCRUD<T = any> {
   paginate(
     pagingDTO: PagingDto,
-    options?: Partial<FindOptions>,
+    options?: Partial<FindOptions>
   ): Promise<PagingResponse<T>>;
 
   getById(id: number, options?: Partial<FindOptions>): Promise<T>;

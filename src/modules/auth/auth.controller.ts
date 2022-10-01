@@ -9,12 +9,14 @@ import { LocalAuthGuard } from './client-local-auth.guard';
 @ApiTags('Login')
 @Controller(ModuleEndPoints.AUTH)
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService
+  ) { }
 
   @UseGuards(LocalAuthGuard)
   @Post(AuthEndPoints.LOGIN)
   async login(@Request() req: AppRequest, @Body() _: LoginDTO) {
-    return this.authService.login(req.user);
+    return this.authService.login(req.user)
   }
 
   @Post(AuthEndPoints.REGISTRATION)

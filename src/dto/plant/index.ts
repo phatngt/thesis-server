@@ -1,153 +1,145 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import {
-  IsArray,
-  IsInt,
-  IsObject,
-  IsOptional,
-  IsString,
-  Max,
-  MaxLength,
-  Min,
-  MinLength,
-} from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsArray, IsInt, IsObject, IsOptional, IsString, Max, MaxLength, Min, MinLength } from "class-validator";
 
 export class PlantDTO {
   @ApiProperty({
-    description: 'Plant name',
-    default: 'Rose',
+    description: "Plant name",
+    default: "Rose"
   })
   @IsString()
   @MinLength(1)
   @MaxLength(100)
-  name: string;
+  name: string
 
   @ApiProperty({
-    description: 'Plant career guide',
-    default: 'Water on morning ...',
+    description: "Plant career guide",
+    default: "Water on morning ..."
   })
   @ApiPropertyOptional()
   @IsString()
   @MinLength(1)
   @MaxLength(1000)
   @IsOptional()
-  careerGuide: string;
+  careerGuide: string
 
   @ApiProperty({
-    description: 'Plant species',
-    default: 'Abc',
+    description: "Plant species",
+    default: "Abc"
   })
   @ApiPropertyOptional()
   @IsString()
   @MinLength(1)
   @MaxLength(10)
   @IsOptional()
-  color: string;
+  color: string
 
   @ApiProperty({
-    description: 'Plant age',
+    description: "Plant age",
     default: 1,
-    type: 'int',
+    type: 'int'
   })
   @ApiPropertyOptional()
-  age: number;
+  age: number
 
   @ApiProperty({ type: 'array', items: { type: 'string', format: 'binary' } })
   @ApiPropertyOptional()
-  images: any;
+  images: any
 
   @ApiProperty({
-    description: 'Plant type id',
+    description: "Plant type id",
     default: 1,
-    type: 'int',
+    type: 'int'
   })
-  plantTypeId: number;
+  plantTypeId: number
+
 }
 
 export class PlantTypeDTO {
   @ApiProperty({
-    description: 'Plant type',
-    default: 'Rose',
+    description: "Plant type",
+    default: "Rose"
   })
   @IsString()
   @MinLength(1)
   @MaxLength(100)
-  name: string;
+  name: string
+
 
   @ApiProperty({
-    description: 'Plant type description',
-    default: 'Abc',
+    description: "Plant type description",
+    default: "Abc"
   })
   // @IsString()
   // @MinLength(1)
   // @MaxLength(1000)
   // @IsOptional()
-  description: string;
+  description: string
 
   @ApiProperty({
-    description: 'Plant family',
-    default: 'Abc',
+    description: "Plant family",
+    default: "Abc"
   })
   @IsString()
   @MinLength(1)
   @MaxLength(50)
   @IsOptional()
-  family: string;
+  family: string
 
   @ApiProperty({
-    description: 'Plant genus',
-    default: 'Abc',
+    description: "Plant genus",
+    default: "Abc"
   })
   @IsString()
   @MinLength(1)
   @MaxLength(50)
   @IsOptional()
-  genus: string;
+  genus: string
 
   @ApiProperty({
-    description: 'Plant species',
-    default: 'Abc',
+    description: "Plant species",
+    default: "Abc"
   })
   @IsString()
   @MinLength(1)
   @MaxLength(50)
   @IsOptional()
-  species: string;
+  species: string
 
   @ApiProperty({
-    description: 'Plant species',
-    default: 'Abc',
+    description: "Plant species",
+    default: "Abc"
   })
   @IsString()
   @MinLength(1)
   @MaxLength(10)
   @IsOptional()
-  light: string;
+  light: string
 }
 
 export class UpdatePlantDTO {
   @ApiProperty({
-    description: 'Plant name',
-    default: 'Rose',
+    description: "Plant name",
+    default: "Rose"
   })
   @IsString()
   @MinLength(1)
   @MaxLength(100)
   @IsOptional()
-  name: string;
+  name: string
 
   @ApiProperty({
-    description: 'Plant career guide',
-    default: 'Water on morning ...',
+    description: "Plant career guide",
+    default: "Water on morning ..."
   })
   @ApiPropertyOptional()
   @IsString()
   @MinLength(1)
   @MaxLength(1000)
   @IsOptional()
-  career_guide: string;
+  career_guide: string
 
   @ApiProperty({ type: 'array', items: { type: 'string', format: 'binary' } })
   @ApiPropertyOptional()
   @IsOptional()
-  images: any;
+  images: any
 }

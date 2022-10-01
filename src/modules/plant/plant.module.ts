@@ -7,8 +7,11 @@ import { PlantController } from './plant.controller';
 import { PlantService } from './plant.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Plants, PlantTypes]), FileModule],
+  imports: [
+    TypeOrmModule.forFeature([Plants, PlantTypes]),
+    FileModule
+  ],
   controllers: [PlantController],
-  providers: [PlantService],
+  providers: [PlantService]
 })
-export class PlantModule {}
+export class PlantModule { }

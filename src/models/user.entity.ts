@@ -8,12 +8,13 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Audit } from './audit.entity';
-import { Plants } from './plants.entity';
+import { Plants } from "./plants.entity";
 import { Roles } from './roles.entity';
 import { UserType } from './user-types.entity';
 
 @Entity({ name: 'user' })
 export class User extends Audit {
+
   @PrimaryGeneratedColumn('increment') id: number;
 
   @Column()
@@ -32,17 +33,17 @@ export class User extends Audit {
   phone: string;
 
   @Column({
-    nullable: true,
+    nullable: true
   })
   address: string;
 
   @Column({
-    nullable: true,
+    nullable: true
   })
   birthday: string;
 
   @Column({
-    default: false,
+    default: false
   })
   is_premium: boolean;
 
@@ -56,4 +57,5 @@ export class User extends Audit {
 
   @OneToMany(() => Plants, (plants) => plants.owner)
   plants: Plants;
+
 }

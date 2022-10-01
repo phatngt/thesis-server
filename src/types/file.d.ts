@@ -1,4 +1,4 @@
 export interface IImageType {
-  name: string;
-  data: Buffer;
+  name: string
+  data: Buffer
 }

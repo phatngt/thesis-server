@@ -1,8 +1,8 @@
 export enum ModuleEndPoints {
-  AUTH = 'auth',
+  AUTH = 'auth'
 }
 
 export enum AuthEndPoints {
   LOGIN = 'login',
-  REGISTRATION = 'registration',
+  REGISTRATION = 'registration'
 }
