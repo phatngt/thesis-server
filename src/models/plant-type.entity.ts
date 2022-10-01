@@ -1,5 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Audit } from './audit.entity';
+import { WaterScheduler } from './water-scheduler.entity';
 
 @Entity({ name: 'plant_type' })
 export class PlantTypes extends Audit {
@@ -41,4 +49,7 @@ export class PlantTypes extends Audit {
     default: 'MEDIUM',
   })
   light: string;
+
+  @OneToMany(() => WaterScheduler, (ws) => ws.plantTypes)
+  waterScheduler: WaterScheduler[];
 }
